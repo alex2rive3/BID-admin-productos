@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CardP from "../layout/CardP";
@@ -23,20 +23,31 @@ const ProductList = () => {
                 <Box
                     sx={{
                         display: "flex",
-                        flexDirection: "column-reverse",
+                        flexDirection: "column",
                         gap: 1,
                     }}
                 >
-                    {products.map((product, idx) => {
-                        return (
-                            <CardP
-                                key={idx}
-                                id={product._id}
-                                title={product.title}
-                                removeFromDom={removeFromDom}
-                            />
-                        );
-                    })}
+                    <Typography variant="h3" align="center" gutterBottom mt={2}>
+                        List of Products
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column-reverse",
+                            gap: 1,
+                        }}
+                    >
+                        {products.map((product, idx) => {
+                            return (
+                                <CardP
+                                    key={idx}
+                                    id={product._id}
+                                    title={product.title}
+                                    removeFromDom={removeFromDom}
+                                />
+                            );
+                        })}
+                    </Box>
                 </Box>
             ) : (
                 <div className="contLoader">

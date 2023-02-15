@@ -4,6 +4,7 @@ import ProductList from "../components/ProductList";
 const Main = () => {
     return (
         <div>
+            <ProductAdd />
             <ProductList />
         </div>
     );

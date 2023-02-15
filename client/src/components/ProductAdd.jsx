@@ -41,7 +41,7 @@ const ProductAdd = () => {
         <>
             <ProductForm
                 initialValues={datosIniciales}
-                textAction="Registre"
+                textAction="Register"
                 onSubmit={createProduct}
             />
         </>

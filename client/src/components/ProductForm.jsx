@@ -1,8 +1,7 @@
 import React from "react";
-import { useFormik, Field, FormikProvider } from "formik";
-//import { Formik, Form, Field } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Container, Button, TextField, Box, FormControl } from "@mui/material/";
+import { Container, Button, TextField, Box, Typography } from "@mui/material/";
 const ProductsErrores = Yup.object().shape({
     title: Yup.string()
         .min(5, "El Titulo debe tener como minimo 5 caracteres")
@@ -28,9 +27,9 @@ const ProductForm = ({ initialValues, onSubmit, textAction }) => {
 
     return (
         <Container maxWidth="md">
-            <h1 style={{ textAlign: "center", margin: "8px" }}>
+            <Typography variant="h3" align="center" gutterBottom mt={2}>
                 {textAction} Product
-            </h1>
+            </Typography>
             <Box
                 component="form"
                 sx={{

@@ -1,17 +1,11 @@
 import { CardContent, Card, Typography, Button } from "@mui/material";
-import axios from "axios";
 import React from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import "../App.css";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteButton from "../components/DeleteButton";
 const CardP = ({ id, title, removeFromDom }) => {
-    const deleteProduct = async (productId) => {
-        const result = await axios.delete(
-            "http://localhost:8000/api/product/" + productId
-        );
-        const removeDom = await removeFromDom(productId);
-        console.log(result);
-    };
     return (
         <Card sx={{ minWidth: 400 }}>
             <CardContent
@@ -39,22 +33,26 @@ const CardP = ({ id, title, removeFromDom }) => {
                         gap: 1,
                     }}
                 >
-                    <Button variant="contained" color="primary">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<ListAltIcon />}
+                    >
                         <Link className="linkBoton" to={`/${id}`}>
                             Detail
                         </Link>
                     </Button>
-                    <Button
-                        color="error"
-                        type="reset"
-                        variant="contained"
-                        onClick={(e) => deleteProduct(id)}
-                        startIcon={<DeleteIcon />}
-                    >
-                        Delete
-                    </Button>
 
-                    <Button variant="contained" color="success">
+                    <DeleteButton
+                        productId={id}
+                        successCallback={removeFromDom}
+                    />
+
+                    <Button
+                        variant="contained"
+                        color="success"
+                        startIcon={<EditIcon />}
+                    >
                         <Link
                             className="linkBoton"
                             to={"/product/" + id + "/edit"}

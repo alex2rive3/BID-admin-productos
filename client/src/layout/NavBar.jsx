@@ -19,17 +19,25 @@ const NavBar = () => {
                 }}
             >
                 <Typography sx={{ minWidth: 140 }}>
-                    <NavLink aria-current="page" to="/">
+                    <NavLink className="linkBoton" aria-current="page" to="/">
                         Home
                     </NavLink>
                 </Typography>
                 <Typography sx={{ minWidth: 140 }}>
-                    <NavLink aria-current="page" to="product">
+                    <NavLink
+                        className="linkBoton"
+                        aria-current="page"
+                        to="product"
+                    >
                         Products
                     </NavLink>
                 </Typography>
                 <Typography sx={{ minWidth: 140 }}>
-                    <NavLink aria-current="page" to="product/new">
+                    <NavLink
+                        className="linkBoton"
+                        aria-current="page"
+                        to="product/new"
+                    >
                         New Product
                     </NavLink>
                 </Typography>
