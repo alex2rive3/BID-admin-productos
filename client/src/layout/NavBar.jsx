@@ -14,6 +14,8 @@ const NavBar = () => {
                     alignItems: "center",
                     textAlign: "center",
                     justifyContent: "flex-end",
+                    bgcolor: "primary.main",
+                    color: "primary.main",
                 }}
             >
                 <Typography sx={{ minWidth: 140 }}>

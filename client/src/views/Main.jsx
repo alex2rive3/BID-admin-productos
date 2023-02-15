@@ -1,10 +1,9 @@
 import React from "react";
-import ProductForm from "../components/ProductForm";
+import ProductAdd from "../components/ProductAdd";
 import ProductList from "../components/ProductList";
 const Main = () => {
     return (
         <div>
-            <ProductForm />
             <ProductList />
         </div>
     );

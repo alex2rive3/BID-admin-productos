@@ -14,7 +14,7 @@ const Details = () => {
             });
             setLoaded(true);
         });
-    }, []);
+    }, [id]);
     //const { title, price, description } = product;
     //console.log(product);
     return (

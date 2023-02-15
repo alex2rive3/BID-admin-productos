@@ -1,53 +1,35 @@
-import React, { useState } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
+import React from "react";
+import { useFormik, Field, FormikProvider } from "formik";
+//import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import { Container, Button, TextField, Box, FormControl } from "@mui/material/";
-const ProductForm = () => {
-    // mantener el control de lo que se escribe a través del gancho useState
-    const [title, setTitle] = useState("");
-    const [price, setPrice] = useState("");
-    const [description, setDescription] = useState("");
-    //gestor cuando se envía el formulario
-    const onSubmitHandler = async (e) => {
-        //evitar el comportamiento por defecto de submit
-        e.preventDefault();
-        //hacer una petición POST para crear una nueva persona
-        try {
-            const result = await axios.post(
-                "http://localhost:8000/api/product/new",
-                {
-                    title,
-                    price,
-                    description,
-                }
-            );
-            console.log(result);
-            if (result.status === 200) {
-                Swal.fire({
-                    icon: "success",
-                    title: "GENIAL!!!",
-                    text: `Se ha agregado el producto ${result.data.title} perfectamente!`,
-                });
-                setTitle("");
-                setPrice("");
-                setDescription("");
-            }
-        } catch (error) {
-            console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: "Ops que mal!!!",
-                text: `Error: ${
-                    error?.response?.data?.message || error.message
-                }`,
-            });
-        }
-    };
-    //onChange para actualizar title y price
+const ProductsErrores = Yup.object().shape({
+    title: Yup.string()
+        .min(5, "El Titulo debe tener como minimo 5 caracteres")
+        .max(50, "El titulo no puede exder los 50 caracteres")
+        .required("Requerido"),
+    price: Yup.number()
+        .integer("Debe ser un numero entero")
+        .required("No puedes guardar un producto sin precio")
+        .positive("No puede ser negativo"),
+    description: Yup.string()
+        .required("La descripcion es requerido.")
+        .min(10, "Se necesita como minumo 10 caracteres.")
+        .max(100, "No puede superar los 100 caracteres"),
+});
+
+const ProductForm = ({ initialValues, onSubmit, textAction }) => {
+    const formik = useFormik({
+        initialValues: initialValues,
+        enableReinitialize: "true",
+        onSubmit: onSubmit,
+        validationSchema: ProductsErrores,
+    });
+
     return (
         <Container maxWidth="md">
             <h1 style={{ textAlign: "center", margin: "8px" }}>
-                Register New Product
+                {textAction} Product
             </h1>
             <Box
                 component="form"
@@ -56,45 +38,63 @@ const ProductForm = () => {
                     maxWidth: "100%",
                     m: "auto",
                 }}
-                noValidate
                 autoComplete="off"
-                onSubmit={onSubmitHandler}
+                onSubmit={formik.handleSubmit}
             >
                 <TextField
-                    sx={{ mb: 1 }}
                     fullWidth
-                    label="Title"
+                    id="title"
                     variant="standard"
                     type="text"
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
+                    name="title"
+                    label="Title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
                 />
+
                 <TextField
-                    sx={{ mb: 1 }}
-                    label="Price"
                     fullWidth
+                    id="price"
+                    name="price"
                     variant="standard"
+                    label="Price"
                     type="number"
-                    onChange={(e) => setPrice(e.target.value)}
-                    value={price}
+                    value={formik.values.price}
+                    onChange={formik.handleChange}
+                    error={formik.touched.price && Boolean(formik.errors.price)}
+                    helperText={formik.touched.price && formik.errors.price}
                 />
                 <TextField
-                    sx={{ mb: 1 }}
                     fullWidth
-                    label="Descrition"
+                    id="description"
+                    name="description"
+                    label="Description"
+                    type="text"
                     variant="standard"
                     multiline
                     rows={4}
-                    onChange={(e) => setDescription(e.target.value)}
-                    value={description}
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.description &&
+                        Boolean(formik.errors.description)
+                    }
+                    helperText={
+                        formik.touched.description && formik.errors.description
+                    }
                 />
 
-                <FormControl fullWidth sx={{ m: "auto" }}>
-                    <Button type="submit" variant="contained">
-                        Registrar
-                    </Button>
-                </FormControl>
-                <hr />
+                <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    type="submit"
+                    disabled={!(formik.isValid && formik.dirty)}
+                >
+                    {textAction} Product
+                </Button>
             </Box>
         </Container>
     );

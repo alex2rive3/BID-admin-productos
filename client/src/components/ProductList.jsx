@@ -40,7 +40,7 @@ const ProductList = () => {
                 </Box>
             ) : (
                 <div className="contLoader">
-                    <span class="loader"></span>
+                    <span className="loader"></span>
                 </div>
             )}
         </>

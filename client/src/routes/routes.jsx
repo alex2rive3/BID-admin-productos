@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import ProductForm from "../components/ProductForm";
+import ProductAdd from "../components/ProductAdd";
 import Layout from "../layout/Layout";
 import NotFound from "../views/NotFount";
 import ProductList from "../components/ProductList";
@@ -32,7 +32,7 @@ export default createBrowserRouter([
             },
             {
                 path: "product/new",
-                element: <ProductForm />,
+                element: <ProductAdd />,
             },
         ],
     },
